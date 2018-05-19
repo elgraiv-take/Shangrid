@@ -1,9 +1,10 @@
 # Shangrid
+
 ソケット通信を使って別ツールからExcelで値の編集をできるようにするためのExcel Add-in  
 ということにしているが実質Blenderのウェイト編集をするための仕組み
 
 # 準備
-ShangridでBlender<=>Excelを
+
 ## Excel側
 1. Shangridをビルドする
 
@@ -11,6 +12,7 @@ ShangridでBlender<=>Excelを
 1. BlenderAddonの中のshangridをディレクトリごとBlenderのAddonディレクトリに入れる
 
 # 注意
+
 BlenderがEditモードのままExcel上で値を編集するとウェイトの書き換えに失敗して通信が切れます  
 Editモードで書き換えられないのはどうしようもないのでこれはもうそういう仕様
 
