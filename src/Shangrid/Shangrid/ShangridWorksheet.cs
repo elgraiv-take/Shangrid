@@ -7,7 +7,7 @@ using Excel=Microsoft.Office.Interop.Excel;
 
 namespace Shangrid
 {
-    class ShangridWorksheet
+    class ShangridWorksheet:IDisposable
     {
         struct CellPosition
         {
@@ -29,6 +29,7 @@ namespace Shangrid
         private bool m_initializing;
 
         public event CommandChangeFunc ChangeEvent;
+        public event EventHandler<EventArgs> SheetDeleted;
 
         public void Initialize(Excel.Application application)
         {
@@ -137,6 +138,13 @@ namespace Shangrid
             m_worksheet=(dynamic)newWorkbook.Worksheets.Add();
             m_worksheet.Name = "Shangrid";
             m_worksheet.Change += Cell_Change;
+            m_worksheet.BeforeDelete += Worksheet_BeforeDelete;
+        }
+
+        private void Worksheet_BeforeDelete()
+        {
+            m_worksheet = null;
+            SheetDeleted?.Invoke(this, new EventArgs());
         }
 
         struct ChangedValue
@@ -204,5 +212,28 @@ namespace Shangrid
             }
             ChangeEvent?.Invoke(command);
         }
+
+        #region IDisposable Support
+        private bool disposedValue = false; // 重複する呼び出しを検出するには
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!disposedValue)
+            {
+                if (disposing)
+                {
+                    m_worksheet = null;
+                }
+                disposedValue = true;
+            }
+        }
+
+        // このコードは、破棄可能なパターンを正しく実装できるように追加されました。
+        public void Dispose()
+        {
+            // このコードを変更しないでください。クリーンアップ コードを上の Dispose(bool disposing) に記述します。
+            Dispose(true);
+        }
+        #endregion
     }
 }

@@ -11,7 +11,7 @@ using System.Runtime.Serialization.Json;
 
 namespace Shangrid
 {
-    public class ConnectionCore
+    public class ConnectionCore:IDisposable
     {
         public event CommandChangeFunc ChangeEvent;
         public event CommandSelectFunc SelectEvent;
@@ -95,6 +95,7 @@ namespace Shangrid
 
                     try
                     {
+#if true
                         var task = reader.ReadLineAsync();
                         task.Wait(token);
                         if (task.IsCanceled)
@@ -106,6 +107,13 @@ namespace Shangrid
                             break;
                         }
                         analyzeCommand(task.Result);
+#else
+                        var line = reader.ReadLine();
+                        if (line != null)
+                        {
+                            analyzeCommand(line);
+                        }
+#endif
                     }
                     catch
                     {
@@ -183,5 +191,30 @@ namespace Shangrid
         {
             SetupEvent?.Invoke(command);
         }
+
+#region IDisposable Support
+        private bool disposedValue = false; // 重複する呼び出しを検出するには
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!disposedValue)
+            {
+                if (disposing)
+                {
+                    m_cancel.Dispose();
+                }
+                
+
+                disposedValue = true;
+            }
+        }
+
+        // このコードは、破棄可能なパターンを正しく実装できるように追加されました。
+        public void Dispose()
+        {
+            // このコードを変更しないでください。クリーンアップ コードを上の Dispose(bool disposing) に記述します。
+            Dispose(true);
+        }
+#endregion
     }
 }

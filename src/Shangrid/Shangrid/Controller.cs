@@ -6,10 +6,11 @@ using System.Threading.Tasks;
 
 namespace Shangrid
 {
-    public class Controller:BindableBase
+    public class Controller:BindableBase,IDisposable
     {
 
-        public ConnectionCore Core { get; } = new ConnectionCore();
+        private ConnectionCore m_core= new ConnectionCore();
+        public ConnectionCore Core { get { return m_core; } }
 
         public DelegateCommand StartConnection { get; } 
         public DelegateCommand StopConnection { get; } = new DelegateCommand();
@@ -47,5 +48,30 @@ namespace Shangrid
         {
             Core.Stop();
         }
+
+        #region IDisposable Support
+        private bool disposedValue = false; // 重複する呼び出しを検出するには
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!disposedValue)
+            {
+                if (disposing)
+                {
+                    m_core.Dispose();
+                }
+                
+                disposedValue = true;
+            }
+        }
+        
+
+        // このコードは、破棄可能なパターンを正しく実装できるように追加されました。
+        public void Dispose()
+        {
+            // このコードを変更しないでください。クリーンアップ コードを上の Dispose(bool disposing) に記述します。
+            Dispose(true);
+        }
+        #endregion
     }
 }

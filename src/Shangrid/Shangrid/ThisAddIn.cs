@@ -22,6 +22,7 @@ namespace Shangrid
             m_worksheet = new ShangridWorksheet();
             m_worksheet.Initialize(Application);
             m_worksheet.ChangeEvent += Controller.Core.SendChangeCommand;
+            m_worksheet.SheetDeleted += (o, ev) => Controller.Stop();
             Controller.Core.SetupEvent += m_worksheet.Setup;
             Controller.Core.ChangeEvent += m_worksheet.ValueChange;
 
@@ -34,6 +35,8 @@ namespace Shangrid
         {
             Controller.Stop();
             Window.Close();
+            Controller.Dispose();
+            m_worksheet.Dispose();
         }
         
 

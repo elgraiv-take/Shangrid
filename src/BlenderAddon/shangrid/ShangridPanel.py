@@ -10,9 +10,9 @@ class ShangridToolPanel:
     bl_space_type = 'VIEW_3D'
     bl_region_type = 'TOOLS'
 
-class TCPSpreadSheetPanel(ShangridToolPanel,bpy.types.Panel):
-    bl_idname="DATA_PT_tcp_spread_sheet"
-    bl_label = "TCP Spread Sheet"
+class ShangridControlPanel(ShangridToolPanel,bpy.types.Panel):
+    bl_idname="DATA_PT_shangrid_control"
+    bl_label = "Shangrid"
     bl_category = "Shangrid"
 
     def __init__(self):
