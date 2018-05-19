@@ -135,7 +135,7 @@ namespace Shangrid
         {
             var newWorkbook = m_application.ActiveWorkbook;
             m_worksheet=(dynamic)newWorkbook.Worksheets.Add();
-            m_worksheet.Name = "TCPSS";
+            m_worksheet.Name = "Shangrid";
             m_worksheet.Change += Cell_Change;
         }
 

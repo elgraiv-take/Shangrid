@@ -7,3 +7,4 @@ src/Shangrid/Shangrid/obj/
 bin/
 **.pfx
 
+.pydevproject
