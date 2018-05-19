@@ -1,0 +1,9 @@
+
+.project
+src/Shangrid/packages/
+src/Shangrid/Shangrid/bin/
+src/Shangrid/Shangrid/obj/
+**/.vs/
+bin/
+**.pfx
+
